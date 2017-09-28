@@ -1,0 +1,36 @@
+{
+  "name": "pr-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "prpr": "bin/prpr"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Copyes/Pr-cli.git"
+  },
+  "keywords": [
+    "prpr",
+    "cli",
+    "tool"
+  ],
+  "author": "Copyes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Copyes/Pr-cli/issues"
+  },
+  "homepage": "https://github.com/Copyes/Pr-cli#readme",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "cli-table": "^0.3.1",
+    "co-prompt": "^1.0.0",
+    "commander": "^2.11.0",
+    "download-git-repo": "^1.0.1",
+    "inquirer": "^3.3.0",
+    "ora": "^1.3.0"
+  }
+}

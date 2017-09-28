@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+'use strict'
+ // 定义脚手架的文件路径
+process.env.NODE_PATH = __dirname + '/../node_modules/'
+const program = require('commander')
+const { resolve } = require('path')
+//  根据命令获取指定资源
+const res = command => resolve(__dirname, '../commands', command)
+// 定义当前版本
+program.version(require('../package').version)
+// 定义使用方法
+program.usage('<command>')
+
+// 增加一个模版
+program
+    .command('add')
+    .description('Add a new template')
+    .alias('a')
+    .action(() => {
+        require(res('add'))
+    })
+// 列出所有的模版列表
+program
+    .command('list')
+    .description('Show the template list')
+    .alias('ls')
+    .action(() => {
+        require(res('list'))
+    })
+// 初始化一个项目
+program
+    .command('init')
+    .description('Generate a new project')
+    .alias('i')
+    .action(() => {
+        require(res('init'))
+    })
+program
+    .command('delete')
+    .description('Delete a template')
+    .alias('d')
+    .action(() => {
+        res('delete')
+    })
+
+program.parse(process.argv)
+
+if(!program.args.length){
+    program.help()
+}
