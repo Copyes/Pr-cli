@@ -4,10 +4,9 @@ const { listTable } = require(`${__dirname}/../utils`)
 const { resolve } = require('path')
 const chalk = require('chalk')
 const ora = require('ora')
-const download = require('download-git-repo')
+const exec = require('child_process').exec
 
 let tplList = require(`${__dirname}/../templates`)
-console.log(tplList)
 const questions = [
     {
         type: 'input',
@@ -26,7 +25,7 @@ const questions = [
     {
         type: 'input',
         name: 'project',
-        message: 'the project name',
+        message: 'The project name',
         validate(val){
             if(val === ''){
                 return  'the project name is required'  
@@ -43,17 +42,20 @@ const questions = [
 ]
 
 module.exports = prompt(questions).then(({name, project, place}) => {
-    const gitSite = tplList[name]['owner/name']
+    const gitSite = tplList[name]['owner/link']
     const gitBranch = tplList[name]['branch']
+    // git命令，远程拉取项目并自定义项目名
+    let cmdStr = `git clone ${gitSite} ${project} && cd ${project} && git checkout ${gitBranch}`
     const spinner = ora('Downloading template.....')
 
     spinner.start()
-    download(`${gitSite}#${gitBranch}`, `${place}/${project}`, (err) => {
-        if(err){
-            consol.log(chalk.red(err))
-            process.exit()
+    exec(cmdStr, (error, stdout, stderr) => {
+        if (error) {
+          console.log(chalk.red(error))
+          process.exit()
         }
-        spinner.stop()
-        console.log(chalk.green('New project has been initialized successfully!'))
-    })
+        console.log(chalk.green('\n √ Generation completed!'))
+        console.log(`\n cd ${project} && npm install \n`)
+        process.exit()
+      })
 })

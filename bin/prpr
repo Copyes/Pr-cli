@@ -40,7 +40,7 @@ program
     .description('Delete a template')
     .alias('d')
     .action(() => {
-        res('delete')
+        require(res('delete'))
     })
 
 program.parse(process.argv)
